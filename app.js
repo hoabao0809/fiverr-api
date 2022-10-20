@@ -1,11 +1,37 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 dotenv.config();
+const ejs = require('ejs');
 
 const dbConnect = require('./utils/database');
+
 const User = require('./models/user');
 
+const userRoutes = require('./routes/user');
+const adminRoutes = require('./routes/admin');
+
 const app = express();
+
+// app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.set('view engine', 'ejs');
+app.set('views', 'views');
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'OPTIONS, GET ,POST, PUT, PATCH, DELETE'
+  );
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
+
+// Routes
+app.use('/api', userRoutes);
+app.use('/api/admin', adminRoutes);
 
 dbConnect()
   .then((result) => {

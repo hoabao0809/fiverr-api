@@ -1,0 +1,52 @@
+<%- include('./included/header.ejs') %>
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="centered">Post type jobs</h1>
+      <form action="sub-type-jobs" method="POST">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            name="name"
+            id="name"
+            placeholder="name"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="image">Image</label>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            name="image"
+            id="image"
+            placeholder="image"
+          />
+        </div>
+        <div class="form-group">
+          <label for="typeJob">TypeJob</label>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            name="typeJob"
+            id="typeJob"
+            placeholder="typeJob"
+          />
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            name="description"
+            id="description"
+            placeholder="description"
+          />
+        </div>
+        <button type="submit">Post</button>
+      </form>
+    </div>
+<%- include('./included/footer.ejs') %>

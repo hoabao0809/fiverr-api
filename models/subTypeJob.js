@@ -9,6 +9,7 @@ const subTypeJobSchema = new Schema({
   status: {
     type: Boolean,
     required: false,
+    default: true,
   },
   typeJob: {
     type: Schema.Types.ObjectId,

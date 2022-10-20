@@ -4,11 +4,11 @@ const Schema = mongoose.Schema;
 const typeJobSchema = new Schema({
   name: {
     type: String,
-    required: true,
+    required: false,
   },
   status: {
     type: Boolean,
-    required: true,
+    default: true,
   },
   image: {
     type: String,
