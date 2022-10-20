@@ -16,9 +16,15 @@ const typeJobSchema = new Schema({
   },
   subTypeJobs: [
     {
-      type: Schema.Types.ObjectId,
-      ref: 'SubTypeJob',
-      required: true,
+      _id: {
+        type: Schema.Types.ObjectId,
+        ref: 'SubTypeJob',
+        required: true,
+      },
+      name: {
+        type: String,
+        required: true,
+      },
     },
   ],
   subtitle: {

@@ -13,9 +13,6 @@ exports.getTypeJobs = (req, res, next) => {
     //   });
     //   newTypeJob.save();
     // }
-    res.status(200).json({
-      message: 'Load successfully',
-      data: result,
-    });
+    return res.status(200).json(result);
   });
 };

@@ -40,7 +40,7 @@ exports.postSubTypeJobs = (req, res, next) => {
   newSubTypeJob.save().then((data) => {
     TypeJob.findById(typeJob)
       .then((_typeJob) => {
-        _typeJob.subTypeJobs.push(data._id);
+        _typeJob.subTypeJobs.push({ _id: data._id, name: data.name });
 
         return _typeJob.save();
       })
