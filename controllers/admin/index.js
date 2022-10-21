@@ -55,3 +55,24 @@ exports.postSubTypeJobs = (req, res, next) => {
       });
   });
 };
+
+// Jobs
+exports.getJobs = (req, res, next) => {
+  res.render('jobs');
+};
+
+exports.postJobs = (req, res, next) => {
+  const {
+    name,
+    rating,
+    price,
+    proServices,
+    localSellers,
+    onlineSellers,
+    deliveryTime,
+    type,
+    subType,
+    userCreated,
+  } = req.body;
+  console.log(req.body);
+};

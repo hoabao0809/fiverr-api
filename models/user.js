@@ -24,7 +24,8 @@ const userSchema = new Schema({
   },
   role: {
     type: String,
-    required: true,
+    required: false,
+    default: 'CLIENT'
   },
   skill: [
     {

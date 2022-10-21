@@ -16,3 +16,16 @@ exports.getTypeJobs = (req, res, next) => {
     return res.status(200).json(result);
   });
 };
+
+exports.getTypeJobDetail = (req, res, next) => {
+  const { idTypejob } = req.params;
+
+  TypeJob.findById(idTypejob).then((result) => {
+    if (!result) {
+      res.status(204).json({
+        message: 'No Content',
+      });
+    }
+    res.status(200).json(result);
+  });
+};

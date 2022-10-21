@@ -14,7 +14,7 @@ const subTypeJobSchema = new Schema({
   typeJob: {
     type: Schema.Types.ObjectId,
     ref: 'TypeJob',
-    required: true,
+    required: false,
   },
   image: {
     type: String,
@@ -24,6 +24,13 @@ const subTypeJobSchema = new Schema({
     type: String,
     required: false,
   },
+  jobs: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Job',
+      required: true,
+    },
+  ],
 });
 
 module.exports = mongoose.model('SubTypeJob', subTypeJobSchema);

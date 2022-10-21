@@ -10,10 +10,12 @@ const User = require('./models/user');
 
 const userRoutes = require('./routes/user');
 const adminRoutes = require('./routes/admin');
+const authRoutes = require('./routes/auth');
 
 const app = express();
 
 // app.use(bodyParser.json());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set('view engine', 'ejs');
@@ -23,15 +25,28 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(
     'Access-Control-Allow-Methods',
-    'OPTIONS, GET ,POST, PUT, PATCH, DELETE'
+    'OPTIONS, GET, POST, PUT, PATCH, DELETE'
   );
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, tokenbyclass, token');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Content-Type, Authorization, tokenbyclass, token'
+  );
   next();
 });
 
 // Routes
 app.use('/api', userRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api', authRoutes);
+
+// Error handler
+app.use((error, req, res, next) => {
+  const { statusCode, message, data } = error;
+  res.status(statusCode).json({
+    message,
+    data,
+  });
+});
 
 dbConnect()
   .then((result) => {
