@@ -1,12 +1,16 @@
 const SubTypeJob = require('../../models/subTypeJob');
 
-exports.getJobsBySubType = (req, res, next) => {
-  const idSubType = req.query.subType;
+exports.getSubTypeJobs = (req, res, next) => {
+  const { idSubType } = req.params;
 
-  SubTypeJob.findById(idSubType).then((result) => {
-    if (!result) {
-      res.status(202).json({ message: 'No Content' });
-    }
-    res.status(200).json(result);
-  });
+  SubTypeJob.findOne({ _id: idSubType })
+    .then((result) => {
+      if (!result) {
+        const error = new Error('No data');
+        error.statusCode = 401;
+        throw error;
+      }
+      res.status(200).json(result);
+    })
+    .catch((err) => next(err));
 };

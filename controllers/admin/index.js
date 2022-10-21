@@ -1,5 +1,6 @@
 const TypeJob = require('../../models/typeJob');
 const SubTypeJob = require('../../models/subTypeJob');
+const Job = require('../../models/job');
 
 exports.getTypeJobs = (req, res, next) => {
   res.render('typeJobs');
@@ -62,17 +63,29 @@ exports.getJobs = (req, res, next) => {
 };
 
 exports.postJobs = (req, res, next) => {
-  const {
-    name,
-    rating,
-    price,
-    proServices,
-    localSellers,
-    onlineSellers,
-    deliveryTime,
-    type,
-    subType,
-    userCreated,
-  } = req.body;
-  console.log(req.body);
+  let jobId;
+  let newJob;
+  const job = new Job({
+    ...req.body,
+  });
+  job
+    .save()
+    .then((result) => {
+      newJob = { ...result };
+      jobId = newJob._doc._id
+      return SubTypeJob.findOne({ _id: newJob._doc.subType });
+    })
+    .then((subType) => {
+      if (!subType) {
+        next();
+      }
+      subType.jobs.push({ _id: jobId });
+      return subType.save();
+    })
+    .then((data) => {
+      res.status(201).json(newJob);
+    })
+    .catch((err) => {
+      next(err);
+    });
 };

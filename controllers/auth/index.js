@@ -80,19 +80,6 @@ exports.postSignin = (req, res, next) => {
     });
 };
 
-// {
-//     first_name: 'james',
-//     last_name: 'dang',
-//     email: 'userr12345@gmail.com',
-//     password: '123456',
-//     phone: '987654321',
-//     birthday: '2022-10-19',
-//     skill: [ 'LoL', 'WEB', 'DESIGN' ],
-//     certification: [ 'DIB', 'PYNOW' ],
-//     gender: true,
-//     type: 'ADMIN'
-//   }
-
 function capitalize(s) {
   return s[0].toUpperCase() + s.slice(1);
 }
