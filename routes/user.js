@@ -3,6 +3,8 @@ const userRouter = express.Router();
 const typeJobsController = require('../controllers/user/typeJobs');
 const subTypeJobsController = require('../controllers/user/subTypeJobs');
 const jobsController = require('../controllers/user/jobs');
+const userController = require('../controllers/user/user');
+const authMiddleware = require('../middleware/is-auth');
 
 // Type Jobs
 userRouter.get('/type-jobs', typeJobsController.getTypeJobs); // fetch type jobs
@@ -16,5 +18,13 @@ userRouter.get(
 
 // Jobs
 userRouter.get('/jobs/by-sub-type', jobsController.getJobsBySubType); //lấy danh sách công việc theo loại công việc phụ
-userRouter.get('/jobs/:idJob', jobsController.getJobDetail)
+userRouter.get('/jobs/:idJob', jobsController.getJobDetail);
+userRouter.patch(
+  '/jobs/booking/:idBookedJob',
+  authMiddleware,
+  jobsController.patchBookedJob
+);
+
+// User
+userRouter.get('/users/:idUser', userController.getUserById);
 module.exports = userRouter;

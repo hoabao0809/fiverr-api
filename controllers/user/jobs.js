@@ -1,5 +1,6 @@
 const SubTypeJob = require('../../models/subTypeJob');
 const Job = require('../../models/job');
+const User = require('../../models/user');
 
 exports.getJobsBySubType = (req, res, next) => {
   const idSubType = req.query.subType;
@@ -23,6 +24,29 @@ exports.getJobDetail = (req, res, next) => {
       error.statusCode = 401;
       throw error;
     }
+
     res.status(200).json(result);
   });
+};
+
+exports.patchBookedJob = (req, res, next) => {
+  const { idBookedJob } = req.params;
+
+  User.findById(req.userId)
+    .then((user) => {
+      if (!user) {
+        const error = new Error('No Content');
+        error.statusCode = 401;
+        throw error;
+      }
+      user.bookingJob.push(idBookedJob);
+      return user.save();
+    })
+    .then((result) => {
+      console.log(result);
+      res.status(202).json({ message: 'Book successfully' });
+    })
+    .catch((err) => {
+      next(err);
+    });
 };

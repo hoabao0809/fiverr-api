@@ -49,7 +49,9 @@ exports.postSignin = (req, res, next) => {
   User.findOne({ email })
     .then((user) => {
       if (!user) {
-        const error = new Error('A user with this email cannot be found.');
+        const error = new Error(
+          "The email or password that you've entered is incorrect."
+        );
         error.statusCode = 401;
         throw error;
       }
@@ -70,6 +72,8 @@ exports.postSignin = (req, res, next) => {
         process.env.JWT_SECRET_KEY,
         { expiresIn: '2h' }
       );
+
+      console.log(token);
       const { password, ...responseUser } = loadedUser._doc;
       res.status(200).json({ user: responseUser, token });
     })
