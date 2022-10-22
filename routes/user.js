@@ -16,5 +16,5 @@ userRouter.get(
 
 // Jobs
 userRouter.get('/jobs/by-sub-type', jobsController.getJobsBySubType); //lấy danh sách công việc theo loại công việc phụ
-
+userRouter.get('/jobs/:idJob', jobsController.getJobDetail)
 module.exports = userRouter;

@@ -70,7 +70,8 @@ exports.postSignin = (req, res, next) => {
         process.env.JWT_SECRET_KEY,
         { expiresIn: '2h' }
       );
-      res.status(200).json({ user: loadedUser, token });
+      const { password, ...responseUser } = loadedUser._doc;
+      res.status(200).json({ user: responseUser, token });
     })
     .catch((err) => {
       if (!err.statusCode) {

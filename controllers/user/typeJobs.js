@@ -22,7 +22,7 @@ exports.getTypeJobDetail = (req, res, next) => {
 
   TypeJob.findById(idTypejob).then((result) => {
     if (!result) {
-      res.status(204).json({
+      res.status(401).json({
         message: 'No Content',
       });
     }
