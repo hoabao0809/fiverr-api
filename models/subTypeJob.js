@@ -26,11 +26,9 @@ const subTypeJobSchema = new Schema({
   },
   jobs: [
     {
-      _id: {
-        type: Schema.Types.ObjectId,
-        ref: 'Job',
-        required: false,
-      },
+      type: Schema.Types.ObjectId,
+      ref: 'Job',
+      required: false,
     },
   ],
 });

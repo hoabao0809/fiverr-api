@@ -72,14 +72,14 @@ exports.postJobs = (req, res, next) => {
     .save()
     .then((result) => {
       newJob = { ...result };
-      jobId = newJob._doc._id
+      jobId = newJob._doc._id;
       return SubTypeJob.findOne({ _id: newJob._doc.subType });
     })
     .then((subType) => {
       if (!subType) {
         next();
       }
-      subType.jobs.push({ _id: jobId });
+      subType.jobs.push(jobId);
       return subType.save();
     })
     .then((data) => {

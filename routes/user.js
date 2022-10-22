@@ -18,6 +18,7 @@ userRouter.get(
 
 // Jobs
 userRouter.get('/jobs/by-sub-type', jobsController.getJobsBySubType); //lấy danh sách công việc theo loại công việc phụ
+userRouter.get('/jobs/by-name', jobsController.getJobByName);
 userRouter.get('/jobs/:idJob', jobsController.getJobDetail);
 userRouter.patch(
   '/jobs/booking/:idBookedJob',
