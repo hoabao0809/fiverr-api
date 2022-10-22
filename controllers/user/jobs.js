@@ -2,6 +2,21 @@ const SubTypeJob = require('../../models/subTypeJob');
 const Job = require('../../models/job');
 const User = require('../../models/user');
 
+exports.getJobs = (req, res, next) => {
+  Job.find()
+    .then((jobs) => {
+      if (!jobs) {
+        const error = new Error('No content');
+        error.statusCode = 401;
+        throw error;
+      }
+      res.status(200).json(jobs);
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
+
 exports.getJobsBySubType = (req, res, next) => {
   const idSubType = req.query.subType;
 

@@ -17,6 +17,7 @@ userRouter.get(
 ); // fetch type jobs
 
 // Jobs
+userRouter.get('/jobs', jobsController.getJobs);
 userRouter.get('/jobs/by-sub-type', jobsController.getJobsBySubType); //lấy danh sách công việc theo loại công việc phụ
 userRouter.get('/jobs/by-name', jobsController.getJobByName);
 userRouter.get('/jobs/:idJob', jobsController.getJobDetail);
@@ -27,5 +28,6 @@ userRouter.patch(
 );
 
 // User
+userRouter.get('/users', userController.getUsers);
 userRouter.get('/users/:idUser', userController.getUserById);
 module.exports = userRouter;
