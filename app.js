@@ -27,14 +27,15 @@ app.use((req, res, next) => {
     'Access-Control-Allow-Methods',
     'OPTIONS, GET, POST, PUT, PATCH, DELETE'
   );
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'Content-Type, Authorization'
-  );
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   next();
 });
 
 // Routes
+app.use('/', (req, res, next) => {
+  res.send('Connected');
+  next();
+});
 app.use('/api', userRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api', authRoutes);
