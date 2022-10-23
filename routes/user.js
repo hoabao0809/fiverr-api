@@ -4,7 +4,8 @@ const typeJobsController = require('../controllers/user/typeJobs');
 const subTypeJobsController = require('../controllers/user/subTypeJobs');
 const jobsController = require('../controllers/user/jobs');
 const userController = require('../controllers/user/user');
-const authMiddleware = require('../middleware/is-auth');
+const authMiddleware = require('../middleware/is-authorized');
+const isLoggedIn = require('../middleware/is-authenticated');
 
 // Type Jobs
 userRouter.get('/type-jobs', typeJobsController.getTypeJobs); // fetch type jobs
@@ -23,7 +24,7 @@ userRouter.get('/jobs/by-name', jobsController.getJobByName);
 userRouter.get('/jobs/:idJob', jobsController.getJobDetail);
 userRouter.patch(
   '/jobs/booking/:idBookedJob',
-  authMiddleware,
+  isLoggedIn,
   jobsController.patchBookedJob
 );
 

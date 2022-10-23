@@ -75,7 +75,6 @@ exports.postSignin = (req, res, next) => {
         { expiresIn: '2h' }
       );
 
-      console.log(token);
       const { password, ...responseUser } = loadedUser._doc;
       res.status(200).json({ user: responseUser, token });
     })

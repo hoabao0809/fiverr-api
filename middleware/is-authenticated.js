@@ -3,14 +3,15 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 module.exports = (req, res, next) => {
-  const authHeader = req.get('Authorization');
+  const authHeader = req.get('Authentication');
   if (!authHeader) {
     const error = new Error('Not authenticated.');
     error.statusCode = 401;
     throw error;
   }
 
-  const token = authHeader.split(' ')[1].trim();
+  const token = authHeader.trim();
+  console.log(token);
 
   let decodedToken;
 
@@ -28,6 +29,7 @@ module.exports = (req, res, next) => {
     throw error;
   }
 
-  req.userId = decodedToken.userId;
+  req.clientId = decodedToken.userId;
+  console.log(req.clientId);
   next();
 };

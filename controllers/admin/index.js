@@ -89,7 +89,7 @@ exports.postJobs = (req, res, next) => {
       const job = new Job({
         ...rest,
         type,
-        userCreated: req.userId,
+        userCreated: req.adminId,
       });
 
       return job.save();
