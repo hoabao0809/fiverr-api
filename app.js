@@ -32,10 +32,10 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.use('/', (req, res, next) => {
-  res.send('Connected');
-  next();
-});
+// app.use('', (req, res, next) => {
+//   res.send('Connected');
+//   next();
+// });
 app.use('/api', userRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api', authRoutes);
