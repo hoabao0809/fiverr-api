@@ -1,6 +1,7 @@
 const express = require('express');
 const adminRouter = express.Router();
 const adminController = require('../controllers/admin');
+const authMiddleware = require('../middleware/is-auth');
 
 // Type Jobs
 adminRouter.get('/type-jobs', adminController.getTypeJobs);
@@ -12,6 +13,9 @@ adminRouter.post('/sub-type-jobs', adminController.postSubTypeJobs);
 
 // Jobs
 adminRouter.get('/jobs', adminController.getJobs);
-adminRouter.post('/jobs', adminController.postJobs);
+adminRouter.post('/jobs', authMiddleware, adminController.postJobs);
+
+// Users
+adminRouter.post('/users', authMiddleware, adminController.postUser);
 
 module.exports = adminRouter;

@@ -42,7 +42,7 @@ app.use('/api', authRoutes);
 
 // Error handler
 app.use((error, req, res, next) => {
-  const { statusCode, message, data } = error;
+  const { statusCode = 500, message, data } = error;
   res.status(statusCode).json({
     message,
     data,

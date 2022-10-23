@@ -11,12 +11,14 @@ module.exports = (req, res, next) => {
   }
 
   const token = authHeader.split(' ')[1].trim();
+
   let decodedToken;
 
   try {
     decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
   } catch (err) {
-    err.statusCode = 500;
+    err.statusCode = 401;
+    err.data = token;
     throw err;
   }
 
