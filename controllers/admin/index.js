@@ -89,30 +89,26 @@ exports.postJobs = (req, res, next) => {
       const job = new Job({
         ...rest,
         type,
+        userCreated: req.userId,
       });
-      console.log(req.userId)
-      console.log(job);
-      // return job.save();
+
+      return job.save();
     })
-    // .then((result) => {
-    //   console.log('TEST2')
-
-    //   newJob = { ...result };
-    //   jobId = newJob._doc._id;
-    //   return SubTypeJob.findOne({ _id: newJob._doc.subType });
-    // })
-    // .then((subType) => {
-    //   console.log('TEST3')
-
-    //   if (!subType) {
-    //     next();
-    //   }
-    //   subType.jobs.push(jobId);
-    //   return subType.save();
-    // })
-    // .then((data) => {
-    //   res.status(201).json(newJob);
-    // })
+    .then((result) => {
+      newJob = { ...result };
+      jobId = newJob._doc._id;
+      return SubTypeJob.findOne({ _id: newJob._doc.subType });
+    })
+    .then((subType) => {
+      if (!subType) {
+        next();
+      }
+      subType.jobs.push(jobId);
+      return subType.save();
+    })
+    .then((data) => {
+      res.status(201).json(newJob);
+    })
     .catch((err) => {
       next(err);
     });
