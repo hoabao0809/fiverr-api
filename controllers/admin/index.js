@@ -196,6 +196,17 @@ exports.deleteUser = (req, res, next) => {
     });
 };
 
+exports.updateUser = (req, res, next) => {
+  const { idUser } = req.params;
+  const updatedUser = req.body;
+
+  User.findOneAndUpdate({ _id: idUser }, updatedUser)
+    .then((result) => {
+      res.status(204).json({ message: 'Updated user' });
+    })
+    .catch((err) => next(err));
+};
+
 // const typeJobIds = async (cb) => {
 //   const ids = await TypeJob.find();
 

@@ -17,6 +17,7 @@ adminRouter.post('/jobs', authMiddleware, adminController.postJobs);
 
 // Users
 adminRouter.post('/users', authMiddleware, adminController.postUser);
+adminRouter.put('/users/:idUser', authMiddleware, adminController.updateUser);
 adminRouter.delete(
   '/users/:idUser',
   authMiddleware,
