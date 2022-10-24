@@ -10,10 +10,7 @@ module.exports = (req, res, next) => {
     throw error;
   }
 
-  console.log(authHeader)
-
   const token = authHeader.split(' ')[1].trim();
-
 
   let decodedToken;
 
@@ -30,7 +27,6 @@ module.exports = (req, res, next) => {
     error.statusCode = 401;
     throw error;
   }
-  console.log(decodedToken.userId)
 
   req.adminId = decodedToken.userId;
   next();

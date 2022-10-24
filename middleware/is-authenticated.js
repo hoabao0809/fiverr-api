@@ -11,7 +11,6 @@ module.exports = (req, res, next) => {
   }
 
   const token = authHeader.trim();
-  console.log(token);
 
   let decodedToken;
 
@@ -30,6 +29,5 @@ module.exports = (req, res, next) => {
   }
 
   req.clientId = decodedToken.userId;
-  console.log(req.clientId);
   next();
 };

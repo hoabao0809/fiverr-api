@@ -142,6 +142,60 @@ exports.postUser = (req, res, next) => {
     });
 };
 
+exports.deleteUser = (req, res, next) => {
+  const { idUser } = req.params;
+  let infoJobDeleted;
+
+  User.findByIdAndRemove(idUser)
+    .then((result) => {
+      if (!result) {
+        const error = new Error('No content');
+        error.statusCode = 401;
+        throw error;
+      }
+
+      return Job.find({ userCreated: result._id }); // Find jobs with matched userCreated
+    })
+    .then((jobs) => {
+      if (jobs.length == 0) {
+        return res.status(200).json({ message: 'Deleted user' });
+      }
+
+      infoJobDeleted = jobs.map((job) => {
+        return {
+          _id: job._id,
+          subType: job.subType,
+        };
+      });
+      return Job.deleteMany({ userCreated: idUser }); // delete jobs with matched userCreated
+    })
+    .then((result) => {
+      //  Loop though {_id, subType} object related to Job instance that matches deleted user
+      infoJobDeleted.forEach((info) => {
+        SubTypeJob.findById(info.subType)
+          .then((item) => {
+            item.jobs.pull(info._id); // Update jobs in SubTypeJob
+            return item.save();
+          })
+          .then((pulledSubType) => {
+            return User.find();
+          })
+          .then((users) => {
+            users.forEach((user) => {
+              user.bookingJob.pull(info._id); // remove/update bookingJob in user
+              user.save().then((result) => {
+                // result: newly-updated user instance with new bookingJob
+                return res.status(200).json({ message: 'Deleted user' });
+              });
+            });
+          });
+      });
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
+
 // const typeJobIds = async (cb) => {
 //   const ids = await TypeJob.find();
 

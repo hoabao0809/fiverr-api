@@ -17,5 +17,10 @@ adminRouter.post('/jobs', authMiddleware, adminController.postJobs);
 
 // Users
 adminRouter.post('/users', authMiddleware, adminController.postUser);
+adminRouter.delete(
+  '/users/:idUser',
+  authMiddleware,
+  adminController.deleteUser
+);
 
 module.exports = adminRouter;

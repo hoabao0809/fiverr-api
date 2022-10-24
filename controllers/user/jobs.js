@@ -26,7 +26,7 @@ exports.getJobsBySubType = (req, res, next) => {
       if (!result) {
         res.status(401).json({ message: 'No Content' });
       }
-      res.status(200).json(result.jobs);
+      res.status(200).json(result?.jobs);
     });
 };
 
@@ -54,7 +54,6 @@ exports.patchBookedJob = (req, res, next) => {
         error.statusCode = 401;
         throw error;
       }
-      console.log(user);
 
       user.bookingJob.push(idBookedJob);
       return user.save();
