@@ -3,6 +3,8 @@ const adminRouter = express.Router();
 const adminController = require('../controllers/admin');
 const authMiddleware = require('../middleware/is-authorized');
 
+adminRouter.get('/', authMiddleware, adminController.getDashboard)
+
 // Type Jobs
 adminRouter.get('/type-jobs', adminController.getTypeJobs);
 adminRouter.post('/type-jobs', adminController.postTypeJobs);

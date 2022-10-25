@@ -4,6 +4,11 @@ const Job = require('../../models/job');
 const bcrypt = require('bcryptjs');
 const User = require('../../models/user');
 
+exports.getDashboard = (req, res, next) => {
+  // Purpose is to check adminToken has expired or not
+  res.status(200).json({ message: 'admin dashboard' });
+};
+
 exports.getTypeJobs = (req, res, next) => {
   res.render('typeJobs');
 };
