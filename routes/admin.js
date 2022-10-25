@@ -16,6 +16,8 @@ adminRouter.post('/sub-type-jobs', adminController.postSubTypeJobs);
 // Jobs
 adminRouter.get('/jobs', adminController.getJobs);
 adminRouter.post('/jobs', authMiddleware, adminController.postJobs);
+adminRouter.put('/jobs/:idJob', authMiddleware, adminController.updateJobs);
+adminRouter.delete('/jobs/:idJob', adminController.deleteJobs);
 
 // Users
 adminRouter.post('/users', authMiddleware, adminController.postUser);

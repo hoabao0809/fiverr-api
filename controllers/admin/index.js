@@ -119,6 +119,55 @@ exports.postJobs = (req, res, next) => {
     });
 };
 
+exports.updateJobs = (req, res, next) => {
+  const { idJob } = req.params;
+  const updatedJob = req.body;
+
+  Job.findOneAndUpdate({ _id: idJob }, updatedJob)
+    .then((result) => {
+      res.status(204).json({ message: 'Updated job' });
+    })
+    .catch((err) => next(err));
+};
+
+exports.deleteJobs = (req, res, next) => {
+  const { idJob } = req.params;
+
+  Job.findByIdAndRemove(idJob)
+    .then((removedItem) => {
+      if (!removedItem) {
+        const error = new Error('No content');
+        error.statusCode = 401;
+        throw error;
+      }
+      return SubTypeJob.find({ jobs: { $in: idJob } });
+    })
+    .then((subTypes) => {
+      subTypes.forEach((item) => {
+        item.jobs.pull(idJob);
+        return item.save();
+      });
+
+      User.find()
+        .then((users) => {
+          users.forEach((user) => {
+            user.bookingJob.pull(idJob);
+            user
+              .save()
+              .then((result) => {
+                console.log(result);
+              })
+              .catch((err) => next(err));
+          });
+          res.status(200).json({ message: 'Deleted job' });
+        })
+        .catch((err) => next(err));
+    })
+    .catch((err) => next(err));
+};
+
+// USer
+
 exports.postUser = (req, res, next) => {
   const { password, email, ...rest } = req.body;
 
